@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
     return "ok"
 
-@app.route("/webhook", method=["POST"])
+@app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.get_json()
     print(data)
