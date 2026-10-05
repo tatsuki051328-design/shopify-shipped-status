@@ -23,4 +23,4 @@ def handle_order_shipped(customer_gid):
             update_status_property(stock_id, "Archive")
 
 if __name__ == "__main__":
-    handle_order_shipped("gid://shopify/Customer/9566610292905")
+    handle_order_shipped("gid://shopify/Customer/0000000000000")
