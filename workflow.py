@@ -5,14 +5,22 @@ load_dotenv()
 
 ORDERS_DB_ID = os.environ["ORDERS_DB_ID"]
 STOCK_DB_ID = os.environ["STOCK_DB_ID"]
-NOTION_API_KEY = os.environ["NOTION_API_KEY"]
 
-def update_status(customer_git):
+def handle_order_shipped(customer_gid):
     data_source_id = get_data_source_id(ORDERS_DB_ID)
-    orders = query_orders_db(data_source_id, customer_git)
+    stock_data_source_id = get_data_source_id(STOCK_DB_ID)
+    orders = query_orders_db(data_source_id, customer_gid)
+
     for order in orders:
-        page_id = order["id"]
-        update_status_property(page_id, "発送済み")
+        order_id = order["id"]
+        update_status_property(order_id, "発送済み")
+        billing_name = get_billing_name(order)
+        if not billing_name:
+            continue
+        stocks = query_stock_db(stock_data_source_id, billing_name)
+        for stock in stocks:
+            stock_id = stock["id"]
+            update_status_property(stock_id, "Archive")
 
 if __name__ == "__main__":
-    update_status("gid://shopify/Customer/9566610292905")
+    handle_order_shipped("gid://shopify/Customer/9566610292905")
