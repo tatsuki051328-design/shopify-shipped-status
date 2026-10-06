@@ -1,4 +1,5 @@
 from flask import Flask, request
+from workflow import handle_order_shipped
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ def index():
 def webhook():
     data = request.get_json()
     customer_gid = data["customer"]["admin_graphql_api_id"]
+    handle_order_shipped(customer_gid)
     print(customer_gid)
     return {"status": "received"}
 
