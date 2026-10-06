@@ -9,6 +9,7 @@ def index():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.get_json()
-    print(data)
+    customer_gid = data["customer"]["admin_graphql_api_id"]
+    print(customer_gid)
     return {"status": "received"}
 
