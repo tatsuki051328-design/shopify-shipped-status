@@ -16,4 +16,3 @@ def webhook():
     customer_gid = customer["admin_graphql_api_id"]
     handle_order_shipped(customer_gid)
     return {"status": "received"}
-
